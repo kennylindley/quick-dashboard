@@ -1,0 +1,23 @@
+[32minfo[39m: 
+[32minfo[39m: 
+[32minfo[39m:    Sails.js           <|
+[32minfo[39m:    v0.9.7              |\
+[32minfo[39m:                       /|.\
+[32minfo[39m:                      / || \
+[32minfo[39m:                    ,'  |'  \
+[32minfo[39m:                 .-'.-==|/_--'
+[32minfo[39m:                 `--'-------' 
+[32minfo[39m:    __---___--___---___--___---___--___
+[32minfo[39m:  ____---___--___---___--___---___--___-__
+[32minfo[39m: 
+[32minfo[39m: Server lifted in `/var/node/quick-dashboard`
+[32minfo[39m: To see your app, visit http://localhost:3000
+[32minfo[39m: To shut down Sails, press <CTRL> + C at any time.
+
+[34mdebug[39m: --------------------------------------------------------
+[34mdebug[39m: :: Tue Dec 03 2013 00:06:22 GMT-0600 (CST)
+[34mdebug[39m: 
+[34mdebug[39m: Environment	: development
+[34mdebug[39m: Port		: 3000
+[34mdebug[39m: --------------------------------------------------------
+[34mdebug[39m: Lowering sails...

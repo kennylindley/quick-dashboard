@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Breadsmith Quick-Dashboard</title>
+	<script type="text/javascript" src="js/jquery.js"></script>
+</head>
+
+<body>
+	<div id="time_now"></div>
+
+	<div><b>Today's Sales (<span id="date_today"></span>): </b><span id="sales_today"><img width=30 height=30 src='ajax_loader_large.gif'></span></div>
+	<div><b>Yesterday's Sales (<span id="date_yesterday"></span>): </b><span id="sales_yesterday"><img width=30 height=30 src='ajax_loader_large.gif'></span></div>
+	<div><b>Last Week's Sales (<span id="date_lastWeek"></span>): </b><span id="sales_lastWeek"><img width=30 height=30 src='ajax_loader_large.gif'></span></div>
+	<div><b>Last Month's Sales (<span id="date_lastMonth"></span>): </b><span id="sales_lastMonth"><img width=30 height=30 src='ajax_loader_large.gif'></span></div>
+	<div><b>Last Year's Sales (<span id="date_lastYear"></span>): </b><span id="sales_lastYear"><img width=30 height=30 src='ajax_loader_large.gif'></span></div>
+
+<script>
+$(document).ready(function() {
+	var myDate = new Date();
+	var myYesterday = new Date(myDate.getTime() - (24 * 60 * 60 * 1000));
+	var myLastWeek = new Date(myDate.getTime() - (7 * 24 * 60 * 60 * 1000));
+	var myLastMonth = new Date (myDate.getTime() - (28 * 24 * 60 * 60 * 1000));
+	var myLastYear = new Date (myDate.getTime() - (12 * 30 * 24 * 60 * 60 * 1000));
+
+	getSales(myDate, "#sales_today", "#date_today");
+	getSales(myYesterday, "#sales_yesterday", "#date_yesterday");
+	getSales(myLastWeek, "#sales_lastWeek", "#date_lastWeek");
+	getSales(myLastMonth, "#sales_lastMonth", "#date_lastMonth");
+	getSales(myLastYear, "#sales_lastYear", "#date_lastYear");
+
+setInterval(function() {
+	var myDate = new Date();
+	var myYesterday = new Date(myDate.getTime() - (24 * 60 * 60 * 1000));
+	var myLastWeek = new Date(myDate.getTime() - (7 * 24 * 60 * 60 * 1000));
+	var myLastMonth = new Date (myDate.getTime() - (28 * 24 * 60 * 60 * 1000));
+	var myLastYear = new Date (myDate.getTime() - (12 * 30 * 24 * 60 * 60 * 1000));
+
+	getSales(myDate, "#sales_today", "#date_today");
+	getSales(myYesterday, "#sales_yesterday", "#date_yesterday");
+	getSales(myLastWeek, "#sales_lastWeek", "#date_lastWeek");
+	getSales(myLastMonth, "#sales_lastMonth", "#date_lastMonth");
+	getSales(myLastYear, "#sales_lastYear", "#date_lastYear");
+
+}, 60000);
+
+setInterval(function() {
+	var myDate = new Date();
+
+	$("#time_now").html(myDate.toLocaleTimeString());	
+	
+
+	
+}, 1000);
+});	
+
+var getSales = function(d, is, ds) {
+	$(ds).html(d.toDateString());
+	$.get("/NetIncome?date=" + d.getTime(), function(result) {
+		$(is).html("$" + $.parseJSON(result)[0].net_sales);
+	});
+};
+
+</script>
+</body>
+</html>
+
