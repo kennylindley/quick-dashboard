@@ -1,13 +1,19 @@
 	<div id="time_now"></div>
-
-	<div><b>Today's Sales (<span id="date_today"></span>): </b><span id="sales_today"><img width=30 height=30 src='ajax_loader_large.gif'></span></div>
-	<div><b>Yesterday's Sales (<span id="date_yesterday"></span>): </b><span id="sales_yesterday"><img width=30 height=30 src='ajax_loader_large.gif'></span></div>
-	<div><b>Last Week's Sales (<span id="date_lastWeek"></span>): </b><span id="sales_lastWeek"><img width=30 height=30 src='ajax_loader_large.gif'></span></div>
-	<div><b>Last Month's Sales (<span id="date_lastMonth"></span>): </b><span id="sales_lastMonth"><img width=30 height=30 src='ajax_loader_large.gif'></span></div>
-	<div><b>Last Year's Sales (<span id="date_lastYear"></span>): </b><span id="sales_lastYear"><img width=30 height=30 src='ajax_loader_large.gif'></span></div>
-
+	<div id="accordion1">
+		<div><b>Today's Sales (<span id="date_today"></span>): </b><span id="sales_today"><img width=30 height=30 src='ajax_loader_large.gif'></span></div>
+		<div id="today_mix"></div>
+		<div><b>Yesterday's Sales (<span id="date_yesterday"></span>): </b><span id="sales_yesterday"><img width=30 height=30 src='ajax_loader_large.gif'></span></div>
+		<div id="yesterday_mix"></div>
+		<div><b>Last Week's Sales (<span id="date_lastWeek"></span>): </b><span id="sales_lastWeek"><img width=30 height=30 src='ajax_loader_large.gif'></span></div>
+		<div id="lastWeek_mix"></div>
+		<div><b>Last Month's Sales (<span id="date_lastMonth"></span>): </b><span id="sales_lastMonth"><img width=30 height=30 src='ajax_loader_large.gif'></span></div>
+		<div id="lastMonth_mix"></div>
+		<div><b>Last Year's Sales (<span id="date_lastYear"></span>): </b><span id="sales_lastYear"><img width=30 height=30 src='ajax_loader_large.gif'></span></div>
+		<div id="lastYear_mix"></div>
+	</div>
 <script>
 $(document).ready(function() {
+	$("#accordion1").accordian({active:false });
 	var myDate = new Date();
 	var myYesterday = new Date(myDate.getTime() - (24 * 60 * 60 * 1000));
 	var myLastWeek = new Date(myDate.getTime() - (7 * 24 * 60 * 60 * 1000));
