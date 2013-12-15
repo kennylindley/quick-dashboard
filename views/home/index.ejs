@@ -1,5 +1,5 @@
 	<div id="time_now"></div>
-	<div id="accordion1">
+	<div id="accordion1" class="ui-accordian ui-widget ui-helper-reset" role="tablist">
 		<div><b>Today's Sales (<span id="date_today"></span>): </b><span id="sales_today"><img width=30 height=30 src='ajax_loader_large.gif'></span></div>
 		<div id="today_mix"></div>
 		<div><b>Yesterday's Sales (<span id="date_yesterday"></span>): </b><span id="sales_yesterday"><img width=30 height=30 src='ajax_loader_large.gif'></span></div>
@@ -13,7 +13,7 @@
 	</div>
 <script>
 $(document).ready(function() {
-//	$("#accordion1").accordian({active:false });
+	$("#accordion1").accordion({active:false });
 	var myDate = new Date();
 	var myYesterday = new Date(myDate.getTime() - (24 * 60 * 60 * 1000));
 	var myLastWeek = new Date(myDate.getTime() - (7 * 24 * 60 * 60 * 1000));

@@ -17,7 +17,7 @@
 
 var NetIncome = {
 	index: function(req,res) {
-		console.log(req.param('date'));
+//		console.log(req.param('date'));
 		var myDate = new Date(parseFloat(req.param('date')));
 		
 //		console.log(myDate);
@@ -25,7 +25,7 @@ var NetIncome = {
 			day : myDate.getDate(),
 			month: myDate.getMonth() + 1,
 			year: myDate.getFullYear(),
-			hour: '04',
+			hour: '00',
 			minute: '00'
 		};
 		var range_from = Util.strReplace('{month}%2F{day}%2F{year}+{hour}%3A{minute}', repOptsStart);
@@ -47,9 +47,9 @@ var NetIncome = {
 		};
 		var path = Util.strReplace('http://breadsmith.revelup.com/reports/sales_summary/json/?posstation=&employee=&range_from={range_from}&range_to={range_to}&client_dt_now={client_dt_now}&format=json&establishment={estab}', repOptsURL);
 		var dataOut = "";
-		console.log(path);
+//		console.log(path);
 		require('http').get(path, function(resp) {
-			console.log("Got response: " + resp.statusCode);
+//			console.log("Got response: " + resp.statusCode);
 			resp.on('data', function(chunk) {
 				dataOut = dataOut + chunk;
 			});
