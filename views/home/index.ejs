@@ -1,15 +1,15 @@
 	<div id="time_now"></div>
 	<div id="accordion1" class="ui-accordian ui-widget ui-helper-reset" role="tablist">
 		<div><b>Today's Sales (<span id="date_today"></span>): </b><span id="sales_today"><img width=30 height=30 src='ajax_loader_large.gif'></span></div>
-		<div id="today_mix"></div>
+		<div id="today_chart"></div>
 		<div><b>Yesterday's Sales (<span id="date_yesterday"></span>): </b><span id="sales_yesterday"><img width=30 height=30 src='ajax_loader_large.gif'></span></div>
-		<div id="yesterday_mix"></div>
+		<div id="yesterday_chart"></div>
 		<div><b>Last Week's Sales (<span id="date_lastWeek"></span>): </b><span id="sales_lastWeek"><img width=30 height=30 src='ajax_loader_large.gif'></span></div>
-		<div id="lastWeek_mix"></div>
+		<div id="lastWeek_chart"></div>
 		<div><b>Last Month's Sales (<span id="date_lastMonth"></span>): </b><span id="sales_lastMonth"><img width=30 height=30 src='ajax_loader_large.gif'></span></div>
-		<div id="lastMonth_mix"></div>
+		<div id="lastMonth_chart"></div>
 		<div><b>Last Year's Sales (<span id="date_lastYear"></span>): </b><span id="sales_lastYear"><img width=30 height=30 src='ajax_loader_large.gif'></span></div>
-		<div id="lastYear_mix"></div>
+		<div id="lastYear_chart"></div>
 	</div>
 <script>
 $(document).ready(function() {
@@ -20,11 +20,11 @@ $(document).ready(function() {
 	var myLastMonth = new Date (myDate.getTime() - (28 * 24 * 60 * 60 * 1000));
 	var myLastYear = new Date (myDate.getTime() - (52 * 7 * 24 * 60 * 60 * 1000));
 
-	getSales(myDate, "#sales_today", "#date_today");
-	getSales(myYesterday, "#sales_yesterday", "#date_yesterday");
-	getSales(myLastWeek, "#sales_lastWeek", "#date_lastWeek");
-	getSales(myLastMonth, "#sales_lastMonth", "#date_lastMonth");
-	getSales(myLastYear, "#sales_lastYear", "#date_lastYear");
+	getSales(myDate, "#sales_today", "#date_today","#today_chart");
+	getSales(myYesterday, "#sales_yesterday", "#date_yesterday","#yesterday_chart");
+	getSales(myLastWeek, "#sales_lastWeek", "#date_lastWeek","#lastWeek_chart");
+	getSales(myLastMonth, "#sales_lastMonth", "#date_lastMonth","#lastMonth_chart");
+	getSales(myLastYear, "#sales_lastYear", "#date_lastYear","#lastYear_chart");
 
 setInterval(function() {
 	var myDate = new Date();
@@ -33,11 +33,11 @@ setInterval(function() {
 	var myLastMonth = new Date (myDate.getTime() - (28 * 24 * 60 * 60 * 1000));
 	var myLastYear = new Date (myDate.getTime() - (52 * 7 * 24 * 60 * 60 * 1000));
 
-	getSales(myDate, "#sales_today", "#date_today");
-	getSales(myYesterday, "#sales_yesterday", "#date_yesterday");
-	getSales(myLastWeek, "#sales_lastWeek", "#date_lastWeek");
-	getSales(myLastMonth, "#sales_lastMonth", "#date_lastMonth");
-	getSales(myLastYear, "#sales_lastYear", "#date_lastYear");
+	getSales(myDate, "#sales_today", "#date_today","#today_chart");
+	getSales(myYesterday, "#sales_yesterday", "#date_yesterday","#yesterday_chart");
+	getSales(myLastWeek, "#sales_lastWeek", "#date_lastWeek","#lastWeek_chart");
+	getSales(myLastMonth, "#sales_lastMonth", "#date_lastMonth","#lastMonth_chart");
+	getSales(myLastYear, "#sales_lastYear", "#date_lastYear","#lastYear_chart");
 
 }, 60000);
 
@@ -51,10 +51,31 @@ setInterval(function() {
 }, 1000);
 });	
 
-var getSales = function(d, is, ds) {
+var getSales = function(d, is, ds, dc) {
 	$(ds).html(d.toDateString());
 	$.get("/NetIncome?date=" + d.getTime(), function(result) {
 		$(is).html("$" + $.parseJSON(result)[0].net_sales);
+		var mygraph = $.parseJSON(result)[0].graph_data;
+		var mycats = [];
+		var myvals = [];
+		for(i=0;i<mygraph.lenght;i++) {
+			mycats[i] = mygraph[i][0];
+			myvals[i] = mygraph[i][1];
+		}
+		$(dc).highcharts({
+			chart: {
+				type: 'line'
+			},
+			title: {
+				text: 'Sales breakdown by hour'
+			},
+			xAxis: {
+				categories: mycats
+			},
+			series: [{
+				data: myvals
+			}]
+		});
 	});
 };
 
