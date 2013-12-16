@@ -72,10 +72,11 @@ var getSales = function(d, is, ds, dc) {
 			title: {
 				text: 'Sales breakdown by hour'
 			},
-			XAxis: {
+			xAxis: {
 				categories: mycats
 			},
 			series: [{
+				name: d.toDateString(),
 				data: myvals
 			}]
 		});
