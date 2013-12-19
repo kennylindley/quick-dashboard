@@ -2,7 +2,7 @@
 	<div id="estab" style="display:none">
 	<select name="estab"></select>
 	</div>
-	<div id="accordion1" style="height:100% display:none" class="ui-accordian ui-widget ui-helper-reset" role="tablist">
+	<div id="accordion1" style="height:100%; display:none" class="ui-accordian ui-widget ui-helper-reset" role="tablist">
 		<div><b>Today's Sales (<span id="date_today"></span>): </b><span id="sales_today"><img width=30 height=30 src='ajax_loader_large.gif'></span></div>
 		<span id="today_chart" style="width:100%;height:400px"></span>
 		<div><b>Yesterday's Sales (<span id="date_yesterday"></span>): </b><span id="sales_yesterday"><img width=30 height=30 src='ajax_loader_large.gif'></span></div>
@@ -17,11 +17,11 @@
 <script>
 $(document).ready(function() {
 
-	$.getJS0ON('/Estab', function(data){
+	$.getJSON('/Estab', function(data){
 		var html = '';
 		var len = data.length;
 		for (var i = 0; i< len; i++) {
-			html += '<option value="' + data[i].monthId + '">' + data[i].month + '</option>';
+			html += '<option value="' + data[i].id + '">' + data[i].name + '</option>';
 		}
 		$('select[name=estab]').append(html);
 	});
