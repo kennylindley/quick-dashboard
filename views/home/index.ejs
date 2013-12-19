@@ -1,4 +1,4 @@
-	<div id="time_now"></div>
+	<div id="time_now"></div><button id='btnResetCookie'>Reset cookie</button>
 	<div id="estab" style="display:none">
 	<select name="estab"></select>
 	</div>
@@ -16,7 +16,11 @@
 	</div>
 <script>
 $(document).ready(function() {
-
+	$('#btnResetCookie').click(function(e) {
+		$.removeCookie("quick-dashboard.estab");
+		location.reload();
+	});
+	
 	$.getJSON('/Estab', function(data){
 		var html = '<option value="0">--Choose Establishment--</option>';
 		var len = data.length;
@@ -77,7 +81,9 @@ $(document).ready(function() {
 
 var getSales = function(d, is, ds, dc) {
 	$(ds).html(d.toDateString());
-	$.get("/NetIncome?date=" + d.getTime() + "&estab=" $.cookie("quick-dashboard.estab"), function(result) {
+
+	$.get("/NetIncome?date=" + d.getTime() + "&estab=" + $.cookie("quick-dashboard.estab"), function(result) {
+
 		$(is).html("$" + $.parseJSON(result)[0].net_sales);
 		var mygraph = $.parseJSON(result)[0].graph_data;
 		var mycats = [];
