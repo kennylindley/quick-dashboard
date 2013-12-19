@@ -19,6 +19,7 @@ var NetIncome = {
 	index: function(req,res) {
 //		console.log(req.param('date'));
 		var myDate = new Date(parseFloat(req.param('date')));
+		var estab = parseFloat(req.param('estab'));
 		
 //		console.log(myDate);
 		var repOptsStart = {
@@ -43,7 +44,7 @@ var NetIncome = {
 			range_from: range_from,
 			range_to: range_to,
 			client_dt_now: range_to,
-			estab: 8
+			estab: estab
 		};
 		var path = Util.strReplace('http://breadsmith.revelup.com/reports/sales_summary/json/?posstation=&employee=&range_from={range_from}&range_to={range_to}&client_dt_now={client_dt_now}&format=json&establishment={estab}', repOptsURL);
 		var dataOut = "";
