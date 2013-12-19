@@ -15,16 +15,26 @@
  * @docs        :: http://sailsjs.org/#!documentation/controllers
  */
 
-module.exports = {
-    
-  
-
-
-  /**
-   * Overrides for the settings in `config/controllers.js`
-   * (specific to EstabController)
-   */
-  _config: {}
-
-  
+var Estab = {
+	index: function(req,res) {
+		var path = "http://breadsmith.revelup.com/enterprise/Establishment/?format=json";
+		require('http').get(path, function(resp) {
+//			console.log("Got response: " + resp.statusCode);
+			resp.on('data', function(chunk) {
+				dataOut = dataOut + chunk;
+			});
+			resp.on('end', function() {
+				var estabs = JSON.parse(dataOut).objects;
+				var sendEstabs = [];
+				for (i=0;i<estabs.length;i++) {
+					sendEstabs[i] = {id: estabs[i].id, name: estabs[i].name};
+				}	
+				res.json(sendEstabs);
+			});
+		}).on('error', function(e) {
+			console.log("Got Error: " + e.message);
+		});
+	}
 };
+
+module.exports = Estab;
