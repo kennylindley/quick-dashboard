@@ -18,6 +18,7 @@
 var Estab = {
 	index: function(req,res) {
 		var path = "http://breadsmith.revelup.com/enterprise/Establishment/?format=json";
+		var dataOut = "";
 		require('http').get(path, function(resp) {
 //			console.log("Got response: " + resp.statusCode);
 			resp.on('data', function(chunk) {
