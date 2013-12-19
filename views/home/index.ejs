@@ -1,5 +1,8 @@
 	<div id="time_now"></div>
-	<div id="accordion1" style="height:100%" class="ui-accordian ui-widget ui-helper-reset" role="tablist">
+	<div id="estab" style="display:none">
+	<select name="estab"></select>
+	</div>
+	<div id="accordion1" style="height:100% display:none" class="ui-accordian ui-widget ui-helper-reset" role="tablist">
 		<div><b>Today's Sales (<span id="date_today"></span>): </b><span id="sales_today"><img width=30 height=30 src='ajax_loader_large.gif'></span></div>
 		<span id="today_chart" style="width:100%;height:400px"></span>
 		<div><b>Yesterday's Sales (<span id="date_yesterday"></span>): </b><span id="sales_yesterday"><img width=30 height=30 src='ajax_loader_large.gif'></span></div>
@@ -13,42 +16,56 @@
 	</div>
 <script>
 $(document).ready(function() {
-	$("#accordion1").accordion({collapsible:true, active:false, heightStyle: "content"});
-	var myDate = new Date();
-	var myYesterday = new Date(myDate.getTime() - (24 * 60 * 60 * 1000));
-	var myLastWeek = new Date(myDate.getTime() - (7 * 24 * 60 * 60 * 1000));
-	var myLastMonth = new Date (myDate.getTime() - (28 * 24 * 60 * 60 * 1000));
-	var myLastYear = new Date (myDate.getTime() - (52 * 7 * 24 * 60 * 60 * 1000));
 
-	getSales(myDate, "#sales_today", "#date_today","#today_chart");
-	getSales(myYesterday, "#sales_yesterday", "#date_yesterday","#yesterday_chart");
-	getSales(myLastWeek, "#sales_lastWeek", "#date_lastWeek","#lastWeek_chart");
-	getSales(myLastMonth, "#sales_lastMonth", "#date_lastMonth","#lastMonth_chart");
-	getSales(myLastYear, "#sales_lastYear", "#date_lastYear","#lastYear_chart");
+	$.getJS0ON('/Estab', function(data){
+		var html = '';
+		var len = data.length;
+		for (var i = 0; i< len; i++) {
+			html += '<option value="' + data[i].monthId + '">' + data[i].month + '</option>';
+		}
+		$('select[name=estab]').append(html);
+	});
+	if ($.cookie('quick-dashboard.estab') == undefined) {
+		$("#estab").css("display", "");
+	} else {
+		$("#accordion1").css("display","");
+		$("#accordion1").accordion({collapsible:true, active:false, heightStyle: "content"});
+		var myDate = new Date();
+		var myYesterday = new Date(myDate.getTime() - (24 * 60 * 60 * 1000));
+		var myLastWeek = new Date(myDate.getTime() - (7 * 24 * 60 * 60 * 1000));
+		var myLastMonth = new Date (myDate.getTime() - (28 * 24 * 60 * 60 * 1000));
+		var myLastYear = new Date (myDate.getTime() - (52 * 7 * 24 * 60 * 60 * 1000));
 
-setInterval(function() {
-	var myDate = new Date();
-	var myYesterday = new Date(myDate.getTime() - (24 * 60 * 60 * 1000));
-	var myLastWeek = new Date(myDate.getTime() - (7 * 24 * 60 * 60 * 1000));
-	var myLastMonth = new Date (myDate.getTime() - (28 * 24 * 60 * 60 * 1000));
-	var myLastYear = new Date (myDate.getTime() - (52 * 7 * 24 * 60 * 60 * 1000));
+		getSales(myDate, "#sales_today", "#date_today","#today_chart");
+		getSales(myYesterday, "#sales_yesterday", "#date_yesterday","#yesterday_chart");
+		getSales(myLastWeek, "#sales_lastWeek", "#date_lastWeek","#lastWeek_chart");
+		getSales(myLastMonth, "#sales_lastMonth", "#date_lastMonth","#lastMonth_chart");
+		getSales(myLastYear, "#sales_lastYear", "#date_lastYear","#lastYear_chart");
 
-	getSales(myDate, "#sales_today", "#date_today","#today_chart");
-	getSales(myYesterday, "#sales_yesterday", "#date_yesterday","#yesterday_chart");
-	getSales(myLastWeek, "#sales_lastWeek", "#date_lastWeek","#lastWeek_chart");
-	getSales(myLastMonth, "#sales_lastMonth", "#date_lastMonth","#lastMonth_chart");
-	getSales(myLastYear, "#sales_lastYear", "#date_lastYear","#lastYear_chart");
+		setInterval(function() {
+			var myDate = new Date();
+			var myYesterday = new Date(myDate.getTime() - (24 * 60 * 60 * 1000));
+			var myLastWeek = new Date(myDate.getTime() - (7 * 24 * 60 * 60 * 1000));
+			var myLastMonth = new Date (myDate.getTime() - (28 * 24 * 60 * 60 * 1000));
+			var myLastYear = new Date (myDate.getTime() - (52 * 7 * 24 * 60 * 60 * 1000));
 
-}, 60000);
+			getSales(myDate, "#sales_today", "#date_today","#today_chart");
+			getSales(myYesterday, "#sales_yesterday", "#date_yesterday","#yesterday_chart");
+			getSales(myLastWeek, "#sales_lastWeek", "#date_lastWeek","#lastWeek_chart");
+			getSales(myLastMonth, "#sales_lastMonth", "#date_lastMonth","#lastMonth_chart");
+			getSales(myLastYear, "#sales_lastYear", "#date_lastYear","#lastYear_chart");
 
-setInterval(function() {
-	var myDate = new Date();
+		}, 60000);
 
-	$("#time_now").html(myDate.toLocaleTimeString());	
-	
+		setInterval(function() {
+			var myDate = new Date();
 
-	
-}, 1000);
+			$("#time_now").html(myDate.toLocaleTimeString());	
+			
+
+			
+		}, 1000);
+	}
 });	
 
 var getSales = function(d, is, ds, dc) {
