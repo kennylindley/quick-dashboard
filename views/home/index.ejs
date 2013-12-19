@@ -81,7 +81,8 @@ $(document).ready(function() {
 
 var getSales = function(d, is, ds, dc) {
 	$(ds).html(d.toDateString());
-
+	var estab = $.cookie("quick-dshboard.cookie");
+	$.cookie("quick-dshboard.cookie", estab);
 	$.get("/NetIncome?date=" + d.getTime() + "&estab=" + $.cookie("quick-dashboard.estab"), function(result) {
 
 		$(is).html("$" + $.parseJSON(result)[0].net_sales);
