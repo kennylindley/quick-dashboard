@@ -27,7 +27,7 @@ $(document).ready(function() {
 	});
 	$("select[name=estab]").change(function(e) {
 		var sel = $("select[name=estab] option:selected").val();
-		if (sel <> 0) {
+		if (sel) {
 			$.cookie("quick-dashboard.estab", sel);
 			location.reload();
 		}
