@@ -18,12 +18,19 @@
 $(document).ready(function() {
 
 	$.getJSON('/Estab', function(data){
-		var html = '';
+		var html = '<option value="0">--Choose Establishment--</option>';
 		var len = data.length;
 		for (var i = 0; i< len; i++) {
 			html += '<option value="' + data[i].id + '">' + data[i].name + '</option>';
 		}
 		$('select[name=estab]').append(html);
+	});
+	$("select[name=estab]").change(function(e) {
+		var sel = $("select[name=estab] option:selected").val();
+		if (sel <> 0) {
+			$.cookie("quick-dashboard.estab", sel);
+			location.reload();
+		}
 	});
 	if ($.cookie('quick-dashboard.estab') == undefined) {
 		$("#estab").css("display", "");
